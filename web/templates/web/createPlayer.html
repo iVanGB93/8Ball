@@ -1,0 +1,23 @@
+{% extends 'web/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row m-auto p-3">
+    <div class="col-8 text-center">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingName" placeholder="nombre">
+            <label for="floatingName">Nombre</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="number" class="form-control" id="floatingPhone" placeholder="Teléfono">
+            <label for="floatingPhone">Teléfono</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <label for="floatingInput">Email address</label>
+        </div>             
+        <a href="{% url 'web:plays' %}"><button class="btn btn-success m-2">Guardar</button></a>     
+        <a href="{% url 'web:players' %}"><button class="btn btn-danger m-2">Cancelar</button></a>     
+    </div>
+</div>
+{% endblock %}

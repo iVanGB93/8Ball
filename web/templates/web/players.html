@@ -1,0 +1,18 @@
+{% extends 'web/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row">
+    <div class="col-8 text-center">
+        <a href="{% url 'web:index' %}"><button class="btn btn-danger m-4">Atras</button></a>     
+        <a href="{% url 'web:createPlayer' %}"><button class="btn btn-success m-4">Crear Nuevo</button></a> 
+        <div class="div">
+            <ul class="list-group">
+                {% for player in players %}
+                <li class="list-group-item">{{ player.name }}, {{ player.phone }}</li>
+                {% endfor %}
+            </ul>
+        </div>    
+    </div>
+</div>
+{% endblock %}
