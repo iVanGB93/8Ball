@@ -4,13 +4,17 @@
 {% block content %}
 <section>
     <div class="top">
-        <a class="button" href="{% url 'web:index' %}"><button class="btn btn-danger m-4">Atras</button></a>
+        <a class="button" href="{% url 'web:lists' %}"><button class="btn btn-danger m-4">Atras</button></a>
+        {% if list.closed %}
         <div class="">Premio: 856</div>
         <div class="balance">Balance</div>
+        {% else %}
+        <a class="button" href="{% url 'web:closeList' id %}"><button class="btn btn-danger m-4">Cerrar</button></a>
+        {% endif %}
     </div>
 </section>
 <section>
-    <div class="title">Jugadas</div>
+    <div class="title">Jugadas {{ list.section }}, {{ list.date | date:"d/m/Y"}} {% if list.closed %} (Cerrada) {% else %} (Abierta) {% endif %}</div>
     <div class="plays">
         <table class="table table-striped">
             <thead>
@@ -45,8 +49,9 @@
         <div class="total">Total: ${{ total }}</div>
     </div>
 </section>
+{% if not list.closed %}
 <div class="newPlay">
-    <form method="POST" action="{% url 'web:plays' %}">
+    <form method="POST" action="{% url 'web:plays' id %}">
         {% csrf_token %}
         <div class="newPlayForm">
             {{ form.player }}
@@ -58,4 +63,5 @@
         </div>
     </form>
 </div>
+{% endif %}
 {% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'web/base.html' %}
+{% load static %}
+
+{% block content %}
+<section>
+    <div class="top">
+        <a class="button" href="{% url 'web:lists' %}"><button class="btn btn-danger m-4">Atras</button></a>        
+    </div>
+</section>
+<section>
+    <div class="title">Crear Lista</div>
+    <div class="plays">
+        <form method="POST" action="{% url 'web:createList' %}">
+            {% csrf_token %}
+            {{ form }}
+            <button class="btn btn-primary" type="submit">Guardar</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

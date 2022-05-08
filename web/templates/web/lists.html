@@ -1,0 +1,22 @@
+{% extends 'web/base.html' %}
+{% load static %}
+
+{% block content %}
+<section>
+    <div class="top">
+        <a class="button" href="{% url 'web:index' %}"><button class="btn btn-danger m-4">Atras</button></a>        
+        <a class="button" href="{% url 'web:createList' %}"><button class="btn btn-success m-4">Nueva</button></a>        
+    </div>
+</section>
+<section>
+    <div class="message text-center">{% if message %}{{ message }}{% endif %}</div>
+    <div class="title">Listas</div>
+    <div class="plays">
+        <ul class="m-auto">
+            {% for list in lists %}
+            <li><a href="{% url 'web:plays' list.id %}">{{ list.section }} {{ list.date | date:"d/m/Y" }} {% if list.closed %} Cerrada {% else %} Abierta {% endif %}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+{% endblock %}

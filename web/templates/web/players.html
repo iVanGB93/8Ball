@@ -2,17 +2,37 @@
 {% load static %}
 
 {% block content %}
-<div class="row">
-    <div class="col-8 text-center">
+<section>
+    <div class="top">
         <a href="{% url 'web:index' %}"><button class="btn btn-danger m-4">Atras</button></a>     
-        <a href="{% url 'web:createPlayer' %}"><button class="btn btn-success m-4">Crear Nuevo</button></a> 
-        <div class="div">
-            <ul class="list-group">
-                {% for player in players %}
-                <li class="list-group-item">{{ player.name }}, {{ player.phone }}</li>
-                {% endfor %}
-            </ul>
-        </div>    
+        <a href="{% url 'web:createPlayer' %}"><button class="btn btn-success m-4">Crear Nuevo</button></a>
     </div>
-</div>
+</section>
+<section>
+    <div class="title">Jugadores</div>
+    <div class="plays">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Dealer</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Télefono</th>
+                    <th scope="col">Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for player in players %}
+                <tr>
+                    <th scope="row">1</th>
+                    <td>{{ player.dealer.name }}</td>
+                    <td>{{ player.name }}</td>
+                    <td>{{ player.phone }}</td>
+                    <td>{{ player.email }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>    
+</section>
 {% endblock %}

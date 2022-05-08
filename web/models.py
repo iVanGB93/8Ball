@@ -10,7 +10,7 @@ class Dealer(models.Model):
 class Player(models.Model):
     dealer = models.ForeignKey(Dealer, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, unique=True)
-    phone = models.PositiveBigIntegerField()
+    phone = models.PositiveBigIntegerField(blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
     date = models.DateTimeField(default=datetime.now)
 
@@ -27,3 +27,17 @@ class Play(models.Model):
 
     def __str__(self):
         return self.player.name + " jugo " + str(self.number)
+
+class List(models.Model):
+    optionsSection = (
+        ('Day', 'Day'),
+        ('Night', 'Night')
+    )
+    dealer = models.ForeignKey(Dealer, on_delete=models.CASCADE)
+    section = models.CharField(max_length=5, choices=optionsSection)
+    plays = models.ManyToManyField(Play, related_name='Plays')
+    date = models.DateTimeField(default=datetime.now)
+    closed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.section + " " + str(self.date)
