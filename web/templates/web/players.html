@@ -5,12 +5,13 @@
 <section>
     <div class="top">
         <a href="{% url 'web:index' %}"><button class="btn btn-danger m-4">Atras</button></a>     
-        <a href="{% url 'web:createPlayer' %}"><button class="btn btn-success m-4">Crear Nuevo</button></a>
+        <a href="{% url 'web:createPlayer' %}"><button class="btn btn-success m-4">Nuevo</button></a>
     </div>
 </section>
 <section>
     <div class="title">Jugadores</div>
     <div class="plays">
+        {% if players %}
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -21,18 +22,21 @@
                     <th scope="col">Email</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody>                
                 {% for player in players %}
                 <tr>
-                    <th scope="row">1</th>
+                    <th scope="row">{{ forloop.counter }}</th>
                     <td>{{ player.dealer.name }}</td>
-                    <td>{{ player.name }}</td>
+                    <td><a href="{% url 'web:player-detail' player.id %}">{{ player.name }}</a></td>
                     <td>{{ player.phone }}</td>
                     <td>{{ player.email }}</td>
                 </tr>
-                {% endfor %}
+                {% endfor %}                
             </tbody>
         </table>
+        {% else %}
+        <a href="{% url 'web:createPlayer' %}">No hay jugadores aún, <button class="btn btn-success m-4">Crear Nuevo</button></a>
+        {% endif %}
     </div>    
 </section>
 {% endblock %}

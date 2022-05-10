@@ -6,8 +6,10 @@
     <div class="top">
         <a class="button" href="{% url 'web:lists' %}"><button class="btn btn-danger m-4">Atras</button></a>
         {% if list.closed %}
-        <div class="">Premio: 856</div>
-        <div class="balance">Balance</div>
+        <div class="pick3">Pick 3: {% if list.pick3 %} {{ list.pick3 }} {% else %} - {% endif %}</div>
+        <div class="collect">Recogido: {% if list.collectPick3Total %} {{ list.collectPick3Total }} {% else %} - {% endif %}</div>
+        <div class="reward">Premio: {% if list.rewardPick3Total %} {{ list.rewardPick3Total }} {% else %} - {% endif %}</div>
+        <div class="ganancia">Ganancia: {{ list.collectPick3Total }}-{{ list.rewardPick3Total }}</div>
         {% else %}
         <a class="button" href="{% url 'web:closeList' id %}"><button class="btn btn-danger m-4">Cerrar</button></a>
         {% endif %}
@@ -30,23 +32,23 @@
             <tbody>
                 {% for play in plays %}
                 <tr>
-                    <th scope="row">1</th>
-                    <td>{{ play.player.name }}</td>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td><a href="{% url 'web:player-detail' play.player.id %}">{{ play.player.name }}</a></td>
                     <td>{{ play.number }}</td>
-                    <td>${{ play.strike }}</td>
-                    <td>${{ play.box }}</td>
-                    <td>${{ play.bola }}</td>
+                    <td>${{ play.strike }} {% if list.closed %} {% if play.rewardPick3Strike != 0 %} (+{{ play.rewardPick3Strike }}) {% endif %} {% endif %}</td>
+                    <td>${{ play.box }} {% if list.closed %} {% if play.rewardPick3Box != 0 %} (+{{ play.rewardPick3Box }}) {% endif %} {% endif %}</td>
+                    <td>${{ play.bola }} {% if list.closed %} {% if play.rewardPick3Bola != 0 %} (+{{ play.rewardPick3Bola }}) {% endif %} {% endif %}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>                  
     </div>
     <div class="statistics">
-        <div class="playsTotal">Jugadas: {{ plays.count }}</div>
-        <div class="strikeTotal">Strike: ${{ strikeTotal }}</div>
-        <div class="BoxTotal">Box: ${{ boxTotal }}</div>
-        <div class="BolaTotal">Bola: ${{ bolaTotal }}</div>
-        <div class="total">Total: ${{ total }}</div>
+        <div class="playsTotal">Jugadas: {{ plays.count }}</br>Premios</div>
+        <div class="strikeTotal">Strike: ${{ strikeTotal }}</br>${{ list.rewardPick3Strike}}</div>
+        <div class="BoxTotal">Box: ${{ boxTotal }}</br>${{ list.rewardPick3Box}}</div>
+        <div class="BolaTotal">Bola: ${{ bolaTotal }}</br>${{ list.rewardPick3Bola}}</div>
+        <div class="total">Total: ${{ total }}</br>${{ list.rewardPick3Total}}</div>
     </div>
 </section>
 {% if not list.closed %}

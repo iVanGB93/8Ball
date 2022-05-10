@@ -10,5 +10,6 @@ urlpatterns = [
     path('list/close/<int:id>/', views.closeList, name='closeList'),
     path('plays/<int:id>/', views.plays, name='plays'),
     path('players/', views.players, name='players'),
+    path('players/<int:id>/', views.playerDetail, name='player-detail'),
     path('create/', views.createPlayer, name='createPlayer'),
 ]

@@ -24,6 +24,11 @@ def plays(request, id):
         boxTotal = boxTotal + play.box
         bolaTotal = bolaTotal + play.bola
     total = strikeTotal + boxTotal + bolaTotal
+    list.collectPick3Strike = strikeTotal
+    list.collectPick3Box = boxTotal
+    list.collectPick3Bola = bolaTotal
+    list.collectPick3Total = total
+    list.save()
     content = {'id': id, 'list': list, 'form': form, 'plays': plays, 'strikeTotal': strikeTotal, 'boxTotal': boxTotal, 'bolaTotal': bolaTotal, 'total': total}
     if request.method == 'POST':
         formValues = form(request.POST)
@@ -37,6 +42,43 @@ def plays(request, id):
                 content['plays'] = list.plays.all()
                 return render (request, 'web/plays.html', content)
         return render (request, 'web/plays.html', content)
+    if list.closed and list.pick3 != None:
+        list.rewardPick3Strike = 0
+        list.rewardPick3Box = 0
+        list.rewardPick3Bola = 0
+        list.rewardPick3Total = 0
+        for play in plays:
+            play.pick3 = list.pick3
+            if list.pick3 == play.number:
+                play.rewardPick3Strike = play.strike * 600
+                list.rewardPick3Strike = list.rewardPick3Strike + play.rewardPick3Strike
+            boxNumber = str(play.number)
+            unit = boxNumber[-1] 
+            if len(boxNumber) > 1:
+                ten = boxNumber[-2]
+            else:
+                ten = '0'
+            if len(boxNumber) > 2:
+                hundred = boxNumber[-3]
+            else:
+                hundred = '0'
+            if unit in str(list.pick3) and ten in str(list.pick3) and hundred in str(list.pick3):
+                if ten != '0' and hundred != '0':
+                    if ten == hundred or ten == unit or unit == hundred:
+                        play.rewardPick3Box = play.box * 200
+                    else:
+                        play.rewardPick3Box = play.box * 100
+                list.rewardPick3Box = list.rewardPick3Box + play.rewardPick3Box           
+            pick3String = str(list.pick3 )
+            decenas = int(pick3String[-2:])
+            playString = str(play.number)
+            decenasPlay = int(playString[-2:])
+            if decenas == decenasPlay:
+                play.rewardPick3Bola = play.bola * 70
+                list.rewardPick3Bola = list.rewardPick3Bola + play.rewardPick3Bola
+            play.save()
+            list.rewardPick3Total = list.rewardPick3Strike + list.rewardPick3Box + list.rewardPick3Bola
+            list.save()
     return render (request, 'web/plays.html', content)
 
 def createList(request):    
@@ -82,6 +124,13 @@ def players(request):
     players = Player.objects.all()
     content = {'players': players}
     return render (request, 'web/players.html', content)
+
+def playerDetail(request, id):
+    player = Player.objects.get(id=id)
+    plays = Play.objects.filter(player=player)
+    content = {'player': player, 'plays': plays}
+    return render (request, 'web/playerDetail.html', content)
+
 
 def createPlayer(request):
     form = PlayerForm

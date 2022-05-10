@@ -13,9 +13,13 @@
     <div class="title">Listas</div>
     <div class="plays">
         <ul class="m-auto">
+            {% if lists %}
             {% for list in lists %}
-            <li><a href="{% url 'web:plays' list.id %}">{{ list.section }} {{ list.date | date:"d/m/Y" }} {% if list.closed %} Cerrada {% else %} Abierta {% endif %}</a></li>
+            <li><a href="{% url 'web:plays' list.id %}">{{ list.section }} {{ list.date | date:"d/m/Y" }} {% if list.closed %} Cerrada {% else %} Abierta {% endif %} {% if list.collectPick3Total != 0 %}, Recogido: {{ list.collectPick3Total }} Premio: {{ list.rewardPick3Total}} {% endif %}</a></li>
             {% endfor %}
+            {% else %}
+            <a class="button" href="{% url 'web:createList' %}">No hay listas aún, <button class="btn btn-success m-4">Crear Nueva</button></a>
+            {% endif %}
         </ul>
     </div>
 </section>

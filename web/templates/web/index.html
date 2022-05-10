@@ -2,10 +2,8 @@
 {% load static %}
 
 {% block content %}
-<div class="row">
-    <div class="col-8 text-center">
-        <a href="{% url 'web:players' %}"><button class="btn btn-primary m-4">Jugadores</button></a>     
-        <a href="{% url 'web:lists' %}"><button class="btn btn-success m-4">Jugadas</button></a>     
-    </div>
+<div style="display: flex; position: relative; justify-content: space-between; width: 100%; height: 100%;">
+    <a href="{% url 'web:players' %}"><button class="btn btn-primary m-4">Jugadores</button></a>     
+    <a href="{% url 'web:lists' %}"><button class="btn btn-success m-4">Listas</button></a>     
 </div>
 {% endblock %}

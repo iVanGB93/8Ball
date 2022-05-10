@@ -1,0 +1,41 @@
+{% extends 'web/base.html' %}
+{% load static %}
+
+{% block content %}
+<section>
+    <div class="top">
+        <a href="{% url 'web:lists' %}"><button class="btn btn-success m-4">Listas</button></a>     
+    </div>
+</section>
+<section>
+    <div class="title">Jugadas de {{ player.name }}</div>
+    <div class="plays">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Número</th>
+                    <th scope="col">Pick3</th>
+                    <th scope="col">Strike</th>
+                    <th scope="col">Box</th>
+                    <th scope="col">Bola</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for play in plays %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ play.date | date:"d/m/Y P" }}</td>
+                    <td>{{ play.number }}</td>
+                    <td>{% if play.pick3 %} {{ play.pick3 }} {% else %} - {% endif %}</td>
+                    <td>${{ play.strike }} {% if play.rewardPick3Strike != 0 %}(+{{ play.rewardPick3Strike }}) {% endif %}</td>
+                    <td>${{ play.box }} {% if play.rewardPick3Box != 0 %}(+{{ play.rewardPick3Box }}) {% endif %}</td>
+                    <td>${{ play.bola }} {% if play.rewardPick3Bola != 0 %}(+{{ play.rewardPick3Bola }}) {% endif %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>    
+</section>
+{% endblock %}

@@ -15,7 +15,7 @@ class Player(models.Model):
     date = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
-        return self.name + " de " + self.dealer.name
+        return self.name
 
 class Play(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
@@ -24,6 +24,11 @@ class Play(models.Model):
     box = models.PositiveIntegerField()
     bola = models.PositiveIntegerField()
     date = models.DateTimeField(default=datetime.now)
+    pick3 = models.IntegerField(blank=True, null=True)
+    rewardPick3Strike = models.IntegerField(default=0)
+    rewardPick3Box = models.IntegerField(default=0)
+    rewardPick3Bola = models.IntegerField(default=0)
+    closed = models.BooleanField(default=False)
 
     def __str__(self):
         return self.player.name + " jugo " + str(self.number)
@@ -38,6 +43,15 @@ class List(models.Model):
     plays = models.ManyToManyField(Play, related_name='Plays')
     date = models.DateTimeField(default=datetime.now)
     closed = models.BooleanField(default=False)
+    pick3 = models.IntegerField(blank=True, null=True)
+    collectPick3Strike = models.IntegerField(default=0)
+    collectPick3Box = models.IntegerField(default=0)
+    collectPick3Bola = models.IntegerField(default=0)
+    collectPick3Total = models.IntegerField(default=0)
+    rewardPick3Strike = models.IntegerField(default=0)
+    rewardPick3Box = models.IntegerField(default=0)
+    rewardPick3Bola = models.IntegerField(default=0)
+    rewardPick3Total = models.IntegerField(default=0)
 
     def __str__(self):
         return self.section + " " + str(self.date)
