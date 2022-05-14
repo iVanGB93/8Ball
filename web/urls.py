@@ -11,5 +11,8 @@ urlpatterns = [
     path('plays/<int:id>/', views.plays, name='plays'),
     path('players/', views.players, name='players'),
     path('players/<int:id>/', views.playerDetail, name='player-detail'),
-    path('create/', views.createPlayer, name='createPlayer'),
+    path('players/create/', views.createPlayer, name='createPlayer'),
+    path('dealers/', views.dealers, name='dealers'),
+    path('dealers/<int:id>/', views.dealerDetail, name='dealer-detail'),
+    path('dealers/create/', views.createDealer, name='createDealer'),
 ]

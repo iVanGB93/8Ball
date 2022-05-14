@@ -4,31 +4,27 @@
 {% block content %}
 <section>
     <div class="top">
-        <a href="{% url 'web:players' %}"><button class="btn btn-danger m-4">Atras</button></a>     
+        <a href="{% url 'web:dealers' %}"><button class="btn btn-danger m-4">Atras</button></a>     
     </div>
 </section>
 <section>
-    <div class="title">Crear Jugador</div>
+    <div class="title">Crear Dealer</div>
     <div class="plays">
-        <form action="{% url 'web:createPlayer' %}" method="POST">
-            {% csrf_token %}
-            <div class="form-floating mb-3">
-                {{ form.dealer }}
-                <label for="floatingSelect">Dealer</label>
-            </div>
+        <form action="{% url 'web:createDealer' %}" method="POST">
+            {% csrf_token %}           
             <div class="form-floating mb-3">
                 {{ form.name}}
                 <label for="floatingName">Nombre</label>
             </div>
-            <div class="form-floating mb-3">
+            <!-- <div class="form-floating mb-3">
                 {{ form.phone }}
                 <label for="floatingPhone">Teléfono</label>
             </div>
             <div class="form-floating mb-3">
                 {{ form.email }}
                 <label for="floatingEmail">Email address</label>
-            </div>
-            <button class="btn btn-primary m-2" type="submit">Guardar</button>     
+            </div> -->
+            <button class="btn btn-info m-2" type="submit">Guardar</button>     
         </form>
     </div>    
 </section>

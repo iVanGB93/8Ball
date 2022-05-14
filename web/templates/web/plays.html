@@ -18,6 +18,7 @@
 <section>
     <div class="title">Jugadas {{ list.section }}, {{ list.date | date:"d/m/Y"}} {% if list.closed %} (Cerrada) {% else %} (Abierta) {% endif %}</div>
     <div class="plays">
+        {% if plays %}
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -41,7 +42,10 @@
                 </tr>
                 {% endfor %}
             </tbody>
-        </table>                  
+        </table>
+        {% else %}     
+        <span>Ninguna jugada aún</span>
+        {% endif %}
     </div>
     <div class="statistics">
         <div class="playsTotal">Jugadas: {{ plays.count }}</br>Premios</div>

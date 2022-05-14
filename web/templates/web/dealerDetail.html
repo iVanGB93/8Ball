@@ -1,0 +1,45 @@
+{% extends 'web/base.html' %}
+{% load static %}
+
+{% block content %}
+<section>
+    <div class="top">
+        <a href="{% url 'web:dealers' %}"><button class="btn btn-danger m-4">Atras</button></a>     
+    </div>
+</section>
+<section>
+    <div class="title">Listas de {{ dealer.name }}</div>
+    <div class="plays">
+        {% if lists %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Número</th>
+                    <th scope="col">Pick3</th>
+                    <th scope="col">Strike</th>
+                    <th scope="col">Box</th>
+                    <th scope="col">Bola</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for list in lists %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ list.date | date:"d/m/Y P" }}</td>
+                    <td>{{ list.section }}</td>
+                    <td>{% if play.pick3 %} {{ play.pick3 }} {% else %} - {% endif %}</td>
+                    <td>${{ list.rewardPick3Strike }}</td>
+                    <td>${{ list }}</td>
+                    <td>${{ play.bola }} {% if play.rewardPick3Bola != 0 %}(+{{ play.rewardPick3Bola }}) {% endif %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <span>Ninguna lista aún</span>
+        {% endif %}
+    </div>    
+</section>
+{% endblock %}

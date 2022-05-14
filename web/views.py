@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .forms import PlayForm, ListForm, PlayerForm
-from datetime import datetime, timedelta
+from .forms import PlayForm, ListForm, PlayerForm, DealerForm
+from datetime import datetime
 
 from .models import Player, Play, List, Dealer
 
@@ -143,3 +143,26 @@ def createPlayer(request):
             content = {'players': players}
             return render (request, 'web/players.html', content)
     return render (request, 'web/createPlayer.html', content)
+
+def dealers(request):
+    dealers = Dealer.objects.all()
+    content = {'dealers': dealers}
+    return render(request, 'web/dealers.html', content)
+
+def dealerDetail(request, id):
+    dealer = Dealer.objects.get(id=id)
+    lists = List.objects.filter(dealer=dealer)
+    content = {'dealer': dealer, 'lists': lists}
+    return render(request, 'web/dealerDetail.html', content)
+
+def createDealer(request):
+    form = DealerForm
+    content = {'form': form}
+    if request.method == 'POST':        
+        formValues = form(request.POST)
+        if formValues.is_valid():            
+            formValues.save()
+            dealers = Dealer.objects.all()
+            content = {'dealers': dealers}
+            return render (request, 'web/dealers.html', content)
+    return render (request, 'web/createDealer.html', content)

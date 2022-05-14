@@ -1,3 +1,4 @@
+from pyexpat import model
 from re import A
 from django import forms
 from .models import Play, Player, List, Dealer
@@ -58,6 +59,27 @@ class PlayForm(forms.ModelForm):
         fields = ['player', 'number', 'strike', 'box', 'bola']
 
 class ListForm(forms.ModelForm):
+    dealer = forms.ModelChoiceField(queryset=Dealer.objects.all(), label='dealer', widget=forms.Select(attrs={
+        'class': 'form-select',
+        'id': 'floatingDealerSelect',
+        'placeholder': 'Dealer'
+    }))
+    section = forms.ChoiceField(choices=[('Day', 'Dia'),('Nigth', 'Noche')], label='dealer', widget=forms.Select(attrs={
+        'class': 'form-select',
+        'id': 'floatingSectionSelect',
+        'placeholder': 'Section'
+    }))
     class Meta:
         model = List
         fields = ['dealer', 'section']
+
+class DealerForm(forms.ModelForm):
+    name = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'type': 'text',
+        'id': 'floatingName',
+        'placeholder': 'Nombre'        
+    }))
+    class Meta:
+        model = Dealer
+        fields = ['name']
